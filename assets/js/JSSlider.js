@@ -17,26 +17,28 @@ export default class JSSlider {
 	}
 
 	initEvents() {
-		this.imagesList.forEach(function (item) {
+		this.imagesList.forEach(item => {
 			item.addEventListener("click", e => {
 				this.fireCustomEvent(e.currentTarget, "js-slider-img-click");
 			});
 		});
 
-		if (this.navNext) {
-			this.navNext.addEventListener("click", e => {
+		const [navNext, navPrev, zoom] = this.buttonsFunctions;
+
+		if (navNext) {
+			navNext.addEventListener("click", e => {
 				this.fireCustomEvent(this.sliderRootElement, "js-slider-img-next");
 			});
 		}
 
-		if (this.navPrev) {
-			this.navPrev.addEventListener("click", e => {
+		if (navPrev) {
+			navPrev.addEventListener("click", e => {
 				this.fireCustomEvent(this.sliderRootElement, "js-slider-img-prev");
 			});
 		}
 
-		if (this.zoom) {
-			this.zoom.addEventListener("click", function (e) {
+		if (zoom) {
+			zoom.addEventListener("click", e => {
 				if (e.target === e.currentTarget) {
 					this.fireCustomEvent(this.sliderRootElement, "js-slider-close");
 				}
@@ -46,7 +48,7 @@ export default class JSSlider {
 
 	initCustomEvents() {
 		this.imagesList.forEach(function (img) {
-			img.addEventListener("js-slider-img-click", function (event) {
+			img.addEventListener("js-slider-img-click", event => {
 				this.onImageClick(event);
 			});
 		});
@@ -59,8 +61,7 @@ export default class JSSlider {
 			"js-slider-img-prev",
 			this.onImagePrev()
 		);
-		this.sliderRootElement.addEventListener(
-			"js-slider-close",
+		this.sliderRootElement.addEventListener("js-slider-close", event =>
 			this.onClose(event)
 		);
 	}
@@ -139,7 +140,7 @@ export default class JSSlider {
 
 	onClose(event) {
 		event.currentTarget.classList.remove("js-slider--active");
-		const thumbsList = this.querySelectorAll(
+		const thumbsList = this.sliderRootElement.querySelectorAll(
 			".js-slider__thumbs-item:not(.js-slider__thumbs-item--prototype)"
 		);
 		thumbsList.forEach(item => item.parentElement.removeChild(item));
