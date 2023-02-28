@@ -27,13 +27,13 @@ export default class JSSlider {
 
 		if (navNext) {
 			navNext.addEventListener("click", e => {
-				this.fireCustomEvent(this.sliderRootElement, "js-slider-img-next");
+				this.fireCustomEvent(e.currentTarget, "js-slider-img-next");
 			});
 		}
 
 		if (navPrev) {
 			navPrev.addEventListener("click", e => {
-				this.fireCustomEvent(this.sliderRootElement, "js-slider-img-prev");
+				this.fireCustomEvent(e.currentTarget, "js-slider-img-prev");
 			});
 		}
 
@@ -47,18 +47,16 @@ export default class JSSlider {
 	}
 
 	initCustomEvents() {
-		this.imagesList.forEach(function (img) {
-			img.addEventListener("js-slider-img-click", event => {
-				this.onImageClick(event);
-			});
+		this.imagesList.forEach(img => {
+			img.addEventListener("js-slider-img-click", event =>
+				this.onImageClick(event)
+			);
 		});
 
-		this.sliderRootElement.addEventListener(
-			"js-slider-img-next",
+		this.sliderRootElement.addEventListener("js-slider-img-next", () =>
 			this.onImageNext()
 		);
-		this.sliderRootElement.addEventListener(
-			"js-slider-img-prev",
+		this.sliderRootElement.addEventListener("js-slider-img-prev", () =>
 			this.onImagePrev()
 		);
 		this.sliderRootElement.addEventListener("js-slider-close", event =>
@@ -84,7 +82,7 @@ export default class JSSlider {
 
 		const groupName = event.currentTarget.dataset.sliderGroupName;
 		const thumbsList = document.querySelectorAll(
-			this.imagesSelector + "[data-slider-group-name=" + groupName + "]"
+			`[data-slider-group-name=${groupName}]`
 		);
 		const prototype = document.querySelector(
 			".js-slider__thumbs-item--prototype"
@@ -103,8 +101,10 @@ export default class JSSlider {
 	}
 
 	onImageNext(event) {
-		const currentClassName = ".js-slider__thumbs-image--current";
-		const current = this.sliderRootElement.querySelector(`${currentClassName}`);
+		const currentClassName = "js-slider__thumbs-image--current";
+		const current = this.sliderRootElement.querySelector(
+			`.${currentClassName}`
+		);
 
 		const parentCurrent = current.parentElement;
 		const nextElement = parentCurrent.nextElementSibling;
@@ -122,7 +122,9 @@ export default class JSSlider {
 
 	onImagePrev(event) {
 		const currentClassName = "js-slider__thumbs-image--current";
-		const current = this.sliderRootElement.querySelector(`${currentClassName}`);
+		const current = this.sliderRootElement.querySelector(
+			`.${currentClassName}`
+		);
 
 		const parentCurrent = current.parentElement;
 		const prevElement = parentCurrent.previousElementSibling;
