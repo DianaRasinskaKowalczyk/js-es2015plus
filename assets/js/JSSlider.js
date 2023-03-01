@@ -34,10 +34,10 @@ export default class JSSlider {
 				this.fireCustomEvent(this.sliderRootElement, "js-slider-img-next");
 			});
 
-			navNext.addEventListener("mouseleave", () => {
+			navNext.addEventListener("mouseleave", e => {
 				this.fireCustomEvent(e.currentTarget, "js-slider-start");
 			});
-			navNext.addEventListener("mouseenter", () => {
+			navNext.addEventListener("mouseenter", e => {
 				this.fireCustomEvent(e.currentTarget, "js-slider-stop");
 			});
 		}
@@ -47,10 +47,10 @@ export default class JSSlider {
 				this.fireCustomEvent(this.sliderRootElement, "js-slider-img-prev");
 			});
 
-			navPrev.addEventListener("mouseleave", () => {
+			navPrev.addEventListener("mouseleave", e => {
 				this.fireCustomEvent(e.currentTarget, "js-slider-start");
 			});
-			navPrev.addEventListener("mouseenter", () => {
+			navPrev.addEventListener("mouseenter", e => {
 				this.fireCustomEvent(e.currentTarget, "js-slider-stop");
 			});
 		}
@@ -76,6 +76,7 @@ export default class JSSlider {
 
 	initCustomEvents() {
 		const [navNext, navPrev] = this.buttonsFunctions;
+
 		this.imagesList.forEach(img => {
 			img.addEventListener("js-slider-img-click", event => {
 				this.onImageClick(event);
@@ -113,6 +114,7 @@ export default class JSSlider {
 	}
 
 	startAutoSlider() {
+		clearTimeout(this.time);
 		this.time = setInterval(() => this.onImageNext(), 3000);
 	}
 
