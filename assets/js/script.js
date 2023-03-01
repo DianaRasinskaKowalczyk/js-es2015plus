@@ -185,5 +185,5 @@ document.addEventListener("DOMContentLoaded", init);
 // 	const thumbsList = this.querySelectorAll(
 // 		".js-slider__thumbs-item:not(.js-slider__thumbs-item--prototype)"
 // 	);
-// 	thumbsList.forEach(item => item.parentElement.removeChild(item));
+// // 	thumbsList.forEach(item => item.parentElement.removeChild(item));
 // };
